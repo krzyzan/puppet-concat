@@ -176,7 +176,7 @@ define concat(
 
   exec { "concat_${name}":
     alias       => "concat_${fragdir}",
-    command     => "${concat::setup::concatdir}/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} ${warnflag} ${forceflag} ${orderflag} ${newlineflag}",
+    command     => "/bin/sh ${concat::setup::concatdir}/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} ${warnflag} ${forceflag} ${orderflag} ${newlineflag}",
     loglevel    => debug,
     noop        => false,
     notify      => File[$name],
@@ -184,9 +184,10 @@ define concat(
       File[$fragdir],
       File["${fragdir}/fragments"],
       File["${fragdir}/fragments.concat"],
+      File["${concat::setup::concatdir}/bin/concatfragments.sh"],
     ],
     subscribe   => File[$fragdir],
-    unless      => "${concat::setup::concatdir}/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} -t ${warnflag} ${forceflag} ${orderflag} ${newlineflag}",
+    unless      => "/bin/sh ${concat::setup::concatdir}/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} -t ${warnflag} ${forceflag} ${orderflag} ${newlineflag}",
   }
 
   if $::id == 'root' {
