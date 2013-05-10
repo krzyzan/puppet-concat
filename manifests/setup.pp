@@ -48,13 +48,15 @@ class concat::setup {
     owner  => $id,
     group  => $root_group,
     mode   => '0755',
+    noop   => false,
     source => $fragments_source;
 
   [ $concatdir, "${concatdir}/bin" ]:
     ensure => directory,
     owner  => $id,
     group  => $root_group,
-    mode   => '0750';
+    mode   => '0750',
+    noop   => false;
 
   ## Old versions of this module used a different path.
   '/usr/local/bin/concatfragments.sh':
