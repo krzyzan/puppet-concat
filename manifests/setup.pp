@@ -47,6 +47,7 @@ class concat::setup {
   file{"${concatdir}/bin/concatfragments.sh":
     owner  => $id,
     group  => $root_group,
+    loglevel => debug,
     mode   => '0755',
     noop   => false,
     source => $fragments_source;
@@ -56,7 +57,8 @@ class concat::setup {
     owner  => $id,
     group  => $root_group,
     mode   => '0750',
-    noop   => false;
+    noop   => false,
+    loglevel => debug;
 
   ## Old versions of this module used a different path.
   '/usr/local/bin/concatfragments.sh':

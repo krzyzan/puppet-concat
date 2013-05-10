@@ -131,6 +131,7 @@ define concat(
 
   file { $fragdir:
     ensure => directory,
+    loglevel => debug,
     noop   => false,
   }
 
@@ -143,6 +144,7 @@ define concat(
     ensure   => directory,
     force    => true,
     ignore   => ['.svn', '.git', '.gitignore'],
+    loglevel => debug,
     noop     => false,
     notify   => Exec["concat_${name}"],
     purge    => true,
@@ -152,11 +154,13 @@ define concat(
 
   file { "${fragdir}/fragments.concat":
     ensure   => present,
+    loglevel => debug,
     noop     => false,
   }
 
   file { "${fragdir}/${concat_name}":
     ensure   => present,
+    loglevel => debug,
     noop     => false,
   }
 
@@ -173,6 +177,7 @@ define concat(
   exec { "concat_${name}":
     alias       => "concat_${fragdir}",
     command     => "${concat::setup::concatdir}/bin/concatfragments.sh -o ${fragdir}/${concat_name} -d ${fragdir} ${warnflag} ${forceflag} ${orderflag} ${newlineflag}",
+    loglevel    => debug,
     noop        => false,
     notify      => File[$name],
     require     => [

@@ -64,5 +64,6 @@ define concat::fragment(
     alias   => "concat_fragment_${name}",
     notify  => Exec["concat_${target}"],
     noop    => false,
+    loglevel => debug,
   }
 }
